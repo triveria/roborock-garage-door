@@ -8,8 +8,7 @@ SKETCH:="dobby_garage_door.ino"
 USB_PORT:="/dev/ttyUSB0"
 
 
-all: compile upload
-
+all: compile
 
 install:
 	arduino-cli lib install $(LIBS)
@@ -17,7 +16,7 @@ install:
 compile:
 	arduino-cli compile --fqbn $(FQBN) $(SKETCH)
 
-upload:
+flash:
 	arduino-cli upload -p $(USB_PORT) --fqbn $(FQBN) $(SKETCH)
 
 connect:
