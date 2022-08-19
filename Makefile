@@ -19,3 +19,6 @@ compile:
 
 upload:
 	arduino-cli upload -p $(USB_PORT) --fqbn $(FQBN) $(SKETCH)
+
+connect:
+	minicom -b 115200 -o -D $(USB_PORT)
