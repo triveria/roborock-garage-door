@@ -3,6 +3,16 @@
  * ref.: https://randomnerdtutorials.com/guide-for-microphone-sound-sensor-with-arduino/
  * 
  * poti CCW: increase threshold. turn until LED turns off
+ * 
+ * pinout: https://randomnerdtutorials.com/esp32-pinout-reference-gpios/
+ * 
+ * Pins:
+ * V5  (lower left corner) -> servo board
+ * GND (upper right corner) -> servo boad
+ * SDO -> SDA
+ * CLK -> SCL 
+ * 
+ * 
  */
 
 
@@ -36,7 +46,7 @@ int position_left = SERVO_MIN;
 void setup()
 {
     pinMode(microphone_pin, INPUT);
-    Serial.begin (9600);
+    Serial.begin (115200);
     Serial.println("8 channel Servo test!");
     
     pwm.begin();
@@ -170,5 +180,4 @@ void loop ()
     delay(1500);
     close_door();
     delay(1500);
-    
 }
