@@ -25,13 +25,15 @@ Door door;
 
 void setup()
 {
-    Serial.begin (115200);     
-    delay(10);
+    Serial.begin (115200);
+    Serial.println("Booting...");
 }
 
 
 void loop ()
 {
+    door.test();
+
     // bool noise_detected = check_microphone();
     // bool laser_broken = check_laser();
 

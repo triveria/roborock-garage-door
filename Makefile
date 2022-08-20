@@ -16,7 +16,7 @@ install:
 compile:
 	arduino-cli compile --fqbn $(FQBN) $(SKETCH)
 
-flash:
+flash: compile
 	arduino-cli upload -p $(USB_PORT) --fqbn $(FQBN) $(SKETCH)
 
 connect:

@@ -13,10 +13,12 @@ class Door {
         Adafruit_PWMServoDriver _pwm = Adafruit_PWMServoDriver(_servo_board_address);
         uint8_t _servo_right_idx = 0; // slot on servo board
         uint8_t _servo_left_idx = 1; // slot on servo board
+        void _move_both_servos(int left_start_position, int right_start_position, int left_end_position, int right_end_position);
 
     public:
         Door();
         void open_up();
         void close_down();
-        void find_servo_position();
+        void find_servo_position(uint8_t servo_idx);
+        void test();
 };
