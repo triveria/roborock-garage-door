@@ -20,7 +20,11 @@
 #include "noise_detector.hpp"
 
 
+int microphone_pin = 15;
+
+
 Door door;
+Microphone microphone(microphone_pin);
 
 
 void setup()
@@ -34,10 +38,10 @@ void loop ()
 {
     door.test();
 
-    // bool noise_detected = check_microphone();
+    microphone.noise_detected();
     // bool laser_broken = check_laser();
 
-    // if (noise_detected && door.may_be_opened()) {
+    // if (microphone.noise_detected() && door.may_be_opened()) {
     //     door.open_up();
     // }
 
