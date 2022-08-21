@@ -79,9 +79,17 @@ void Door::open_up()
 }
 
 
+void Door::_switch_servos_off()
+{
+    _pwm.setPWM(_servo_left_idx, 0, 0);
+    _pwm.setPWM(_servo_right_idx, 0, 0);
+}
+
+
 void Door::close_down()
 {
     _move_both_servos(DOOR_OPEN_LEFT, DOOR_OPEN_RIGHT, DOOR_CLOSE_LEFT, DOOR_CLOSE_RIGHT);
+    _switch_servos_off();
 
     unsigned long current_time = millis();
     _time_of_last_closing = current_time;
