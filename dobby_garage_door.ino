@@ -12,7 +12,9 @@
  * SDO -> SDA
  * CLK -> SCL 
  * 
- * 
+ * Potential bugs:
+ *  - time wrap around: then is time of last opening in the future
+ *  - door cannot be used in the first 10 seconds or so, since time_of_last_closing is initialized with 0
  */
 
 
