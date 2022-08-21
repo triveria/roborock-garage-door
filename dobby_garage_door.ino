@@ -18,13 +18,15 @@
 
 #include "door_mechanism.hpp"
 #include "noise_detector.hpp"
+#include "end_stop_switch.hpp"
 
 
-int microphone_pin = 15;
-
+int microphone_pin = 15; // @TODO: set proper pin
+int switch_pin = 10; // @TODO: set proper pin
 
 Door door;
 Microphone microphone(microphone_pin);
+EndStopSwitch end_stop_switch(switch_pin);
 
 
 void setup()
@@ -39,6 +41,8 @@ void loop ()
     door.test();
 
     microphone.noise_detected();
+    bool robot_at_home = end_stop_switch.pushed();
+
     // bool laser_broken = check_laser();
 
     // if (microphone.noise_detected() && door.may_be_opened()) {
