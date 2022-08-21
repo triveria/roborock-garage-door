@@ -16,7 +16,9 @@
 #define SERVO_FREQ 50 // Analog servos run at ~50 Hz updates
 
 
-Door::Door()
+Door::Door() :
+    _time_of_last_opening(0),
+    _time_of_last_closing(0)
 {
     _pwm.begin();
     int internal_oscillator_frequency_hz = 27000000;
@@ -43,15 +45,46 @@ void Door::_move_both_servos(int left_start_position, int right_start_position, 
 }
 
 
+bool Door::_enough_time_passed(unsigned long time_threshold, unsigned long time_of_last_event)
+{
+    unsigned long current_time = millis();
+    unsigned long time_since_last_event = current_time - time_of_last_event;
+    bool enough_time_passed = time_since_last_event >= time_threshold;
+    if( enough_time_passed ) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
+bool Door::may_be_opened()
+{
+    return _enough_time_passed(10000, _time_of_last_closing);
+}
+
+
+bool Door::may_be_closed()
+{
+    return _enough_time_passed(10000, _time_of_last_opening);
+}
+
+
 void Door::open_up()
 {
     _move_both_servos(DOOR_CLOSE_LEFT, DOOR_CLOSE_RIGHT, DOOR_OPEN_LEFT, DOOR_OPEN_RIGHT);
+
+    unsigned long current_time = millis();
+    _time_of_last_opening = current_time;
 }
 
 
 void Door::close_down()
 {
     _move_both_servos(DOOR_OPEN_LEFT, DOOR_OPEN_RIGHT, DOOR_CLOSE_LEFT, DOOR_CLOSE_RIGHT);
+
+    unsigned long current_time = millis();
+    _time_of_last_closing = current_time;
 }
 
 

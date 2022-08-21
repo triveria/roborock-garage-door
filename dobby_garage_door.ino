@@ -40,16 +40,11 @@ void loop ()
 {
     door.test();
 
-    microphone.noise_detected();
-    bool robot_at_home = end_stop_switch.pushed();
+    if (microphone.noise_detected() && door.may_be_opened()) {
+        door.open_up();
+    }
 
-    // bool laser_broken = check_laser();
-
-    // if (microphone.noise_detected() && door.may_be_opened()) {
-    //     door.open_up();
-    // }
-
-    // if (laser_broken && door.may_be_closed()) {
-    //     door.close_down();
-    // }
+    if (end_stop_switch.pushed() && door.may_be_closed()) {
+        door.close_down();
+    }
 }

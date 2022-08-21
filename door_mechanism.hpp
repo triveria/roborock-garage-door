@@ -13,7 +13,10 @@ class Door {
         Adafruit_PWMServoDriver _pwm = Adafruit_PWMServoDriver(_servo_board_address);
         uint8_t _servo_right_idx = 0; // slot on servo board
         uint8_t _servo_left_idx = 1; // slot on servo board
+        int _time_of_last_opening;
+        int _time_of_last_closing;
         void _move_both_servos(int left_start_position, int right_start_position, int left_end_position, int right_end_position);
+        bool _enough_time_passed(unsigned long time_threshold, unsigned long time_of_last_event);
 
     public:
         Door();
@@ -21,4 +24,6 @@ class Door {
         void close_down();
         void find_servo_position(uint8_t servo_idx);
         void test();
+        bool may_be_opened();
+        bool may_be_closed();
 };
