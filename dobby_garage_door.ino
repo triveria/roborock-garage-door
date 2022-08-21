@@ -40,8 +40,6 @@ void setup()
 
 void loop ()
 {
-    door.test();
-
     if (microphone.noise_detected() && door.may_be_opened()) {
         door.open_up();
     }
