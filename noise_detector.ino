@@ -11,7 +11,7 @@ Microphone::Microphone(int microphone_pin)
 int Microphone::noise_level()
 {
     int noise_level = analogRead(_microphone_pin);
-    Serial.println(noise_level);
+    Serial.println((String)"Noise level is " + noise_level);
     return noise_level;
 }
 
@@ -19,7 +19,7 @@ int Microphone::noise_level()
 bool Microphone::noise_detected()
 {
     bool noise_above_threshold = digitalRead(_microphone_pin);
-    Serial.println(noise_above_threshold);
+    Serial.println((String)"Noise level is above threshold:" + noise_above_threshold);
 
     return noise_above_threshold;
 }

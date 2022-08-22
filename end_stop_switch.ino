@@ -11,7 +11,7 @@ EndStopSwitch::EndStopSwitch(int switch_pin)
 bool EndStopSwitch::pushed()
 {
     bool is_pushed = digitalRead(_switch_pin);
-    Serial.println(is_pushed);
+    Serial.println((String)"End stop switch got pushed:" + is_pushed);
 
     return is_pushed;
 }

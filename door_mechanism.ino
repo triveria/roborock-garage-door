@@ -48,7 +48,7 @@ void Door::_move_both_servos(int left_start_position, int right_start_position, 
         int left_position  = left_start_position + i*step_size_left;
         int right_position = right_start_position + i*step_size_right;
 
-        Serial.println((String)"left: " + left_position + ". right: " + right_position);
+        // Serial.println((String)"left: " + left_position + ". right: " + right_position);
 
         _pwm.setPWM(_servo_left_idx,  0, left_position);
         _pwm.setPWM(_servo_right_idx, 0, right_position);
@@ -86,6 +86,7 @@ bool Door::may_be_closed()
 
 void Door::open_up()
 {
+    Serial.println("Opening door...");
     _move_both_servos(DOOR_CLOSE_LEFT, DOOR_CLOSE_RIGHT, DOOR_OPEN_LEFT, DOOR_OPEN_RIGHT);
 
     unsigned long current_time = millis();
@@ -102,6 +103,7 @@ void Door::switch_servos_off()
 
 void Door::close_down()
 {
+    Serial.println("Closing door...");
     _move_both_servos(DOOR_OPEN_LEFT, DOOR_OPEN_RIGHT, DOOR_CLOSE_LEFT, DOOR_CLOSE_RIGHT);
     switch_servos_off();
 
