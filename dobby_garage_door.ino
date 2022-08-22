@@ -35,11 +35,14 @@ void setup()
 {
     Serial.begin (115200);
     Serial.println("Booting...");
+
+    door.setup();
 }
 
 
 void loop ()
 {
+    door.test();
     if (microphone.noise_detected() && door.may_be_opened()) {
         door.open_up();
     }
