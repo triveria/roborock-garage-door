@@ -3,7 +3,6 @@
 #include <Wire.h>
 
 
-
 #define SERVO_MIN  66  // This is the 'minimum' pulse length count (out of 4096). Tweak for each servo.
 #define SERVO_MAX  497 // This is the 'maximum' pulse length count (out of 4096). Tweak for each servo.
 
@@ -18,7 +17,11 @@
 
 Door::Door() :
     _time_of_last_opening(0),
-    _time_of_last_closing(0)
+    _time_of_last_closing(0),
+    _servo_board_address(0x40),
+    _pwm(Adafruit_PWMServoDriver(_servo_board_address)),
+    _servo_right_idx(0),
+    _servo_left_idx(1)
 {
     _pwm.begin();
     int internal_oscillator_frequency_hz = 27000000;
