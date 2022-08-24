@@ -22,9 +22,9 @@ class Door {
         void setup();
         void open_up();
         void close_down();
-        void set_servo_position_via_comport(uint8_t servo_idx);
-        bool is_closed();
         bool is_open();
+        bool is_closed();
+        void set_position_via_comport(uint8_t servo_idx);
         void set_position(uint8_t servo_idx, int choice);
         void debug();
 };
