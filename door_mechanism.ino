@@ -86,6 +86,7 @@ bool Door::may_be_closed()
 
 void Door::open_up()
 {
+    _pwm.wakeup();
     Serial.println("Opening door...");
     _move_both_servos(DOOR_CLOSE_LEFT, DOOR_CLOSE_RIGHT, DOOR_OPEN_LEFT, DOOR_OPEN_RIGHT);
 
@@ -96,8 +97,7 @@ void Door::open_up()
 
 void Door::switch_servos_off()
 {
-    _pwm.setPWM(_servo_left_idx, 0, 0);
-    _pwm.setPWM(_servo_right_idx, 0, 0);
+    _pwm.sleep();
 }
 
 
