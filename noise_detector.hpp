@@ -8,5 +8,6 @@ class Microphone {
     public:
         Microphone(int microphone_pin);
         bool noise_detected();
+        bool no_noise_detected();
         int noise_level();
 };

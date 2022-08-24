@@ -12,9 +12,6 @@
  * SDO -> SDA
  * CLK -> SCL 
  * 
- * Potential bugs:
- *  - time wrap around: then is time of last opening in the future
- *  - door cannot be used in the first 10 seconds or so, since time_of_last_closing is initialized with 0
  */
 
 
@@ -46,7 +43,7 @@ void loop ()
         door.open_up();
     }
 
-    if (end_stop_switch.pushed() && door.is_open()) {
+    if (end_stop_switch.pushed() && microphone.no_noise_detected() && door.is_open()) {
         door.close_down();
     }
 }
