@@ -16,8 +16,6 @@
 
 
 Door::Door() :
-    _time_of_last_opening(0),
-    _time_of_last_closing(0),
     _servo_board_address(0x40),
     _servo_right_idx(0),
     _servo_left_idx(1)
@@ -33,6 +31,7 @@ void Door::setup()
     int internal_oscillator_frequency_hz = 27000000;
     _pwm.setOscillatorFrequency(internal_oscillator_frequency_hz);
     _pwm.setPWMFreq(SERVO_FREQ);  // Analog servos run at ~50 Hz updates
+    close_down();
 }
 
 
@@ -59,28 +58,33 @@ void Door::_move_both_servos(int left_start_position, int right_start_position, 
 }
 
 
-bool Door::_enough_time_passed(unsigned long time_threshold, unsigned long time_of_last_event)
+void Door::debug()
 {
-    unsigned long current_time = millis();
-    unsigned long time_since_last_event = current_time - time_of_last_event;
-    bool enough_time_passed = time_since_last_event >= time_threshold;
-    if( enough_time_passed ) {
-        return true;
-    } else {
-        return false;
+    if(is_closed()){
+        open_up();
+    }
+
+    if(is_open()) {
+        close_down();
     }
 }
 
 
-bool Door::may_be_opened()
+bool Door::is_closed()
 {
-    return _enough_time_passed(10000, _time_of_last_closing);
+    bool is_already_closed = _door_state == Door_state_e::closed;
+    Serial.println((String)"is_already_closed: " + is_already_closed);
+
+    return is_already_closed;
 }
 
 
-bool Door::may_be_closed()
+bool Door::is_open()
 {
-    return _enough_time_passed(10000, _time_of_last_opening);
+    bool is_already_open = _door_state == Door_state_e::open;
+    Serial.println((String)"is_already_open: " + is_already_open);
+
+    return is_already_open;
 }
 
 
@@ -90,12 +94,11 @@ void Door::open_up()
     Serial.println("Opening door...");
     _move_both_servos(DOOR_CLOSE_LEFT, DOOR_CLOSE_RIGHT, DOOR_OPEN_LEFT, DOOR_OPEN_RIGHT);
 
-    unsigned long current_time = millis();
-    _time_of_last_opening = current_time;
+    _door_state = Door_state_e::open;
 }
 
 
-void Door::switch_servos_off()
+void Door::_switch_servos_off()
 {
     _pwm.sleep();
 }
@@ -105,14 +108,13 @@ void Door::close_down()
 {
     Serial.println("Closing door...");
     _move_both_servos(DOOR_OPEN_LEFT, DOOR_OPEN_RIGHT, DOOR_CLOSE_LEFT, DOOR_CLOSE_RIGHT);
-    switch_servos_off();
+    _switch_servos_off();
 
-    unsigned long current_time = millis();
-    _time_of_last_closing = current_time;
+    _door_state = Door_state_e::closed;
 }
 
 
-void Door::find_servo_position(uint8_t servo_idx)
+void Door::set_servo_position_via_comport(uint8_t servo_idx)
 {
     if(!(Serial.available() > 0)) {
         return;
@@ -123,12 +125,6 @@ void Door::find_servo_position(uint8_t servo_idx)
     delay(500);
     Serial.println((String)"moving to position: " + choice);
     _pwm.setPWM(servo_idx, 0, choice);
-}
-
-void Door::test()
-{
-    open_up();
-    close_down();
 }
 
 

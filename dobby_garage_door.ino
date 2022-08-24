@@ -42,12 +42,11 @@ void setup()
 
 void loop ()
 {
-    door.test();
-    if (microphone.noise_detected() && door.may_be_opened()) {
+    if (microphone.noise_detected() && door.is_closed()) {
         door.open_up();
     }
 
-    if (end_stop_switch.pushed() && door.may_be_closed()) {
+    if (end_stop_switch.pushed() && door.is_open()) {
         door.close_down();
     }
 }
