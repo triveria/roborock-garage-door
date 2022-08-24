@@ -4,7 +4,7 @@
 Microphone::Microphone(int microphone_pin)
 {
     _microphone_pin = microphone_pin;
-    pinMode(_microphone_pin, INPUT);
+    pinMode(_microphone_pin, INPUT_PULLDOWN);
 }
 
 

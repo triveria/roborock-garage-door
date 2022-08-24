@@ -4,7 +4,7 @@
 EndStopSwitch::EndStopSwitch(int switch_pin)
 {
     _switch_pin = switch_pin;
-    pinMode(_switch_pin, INPUT_PULLUP);
+    pinMode(_switch_pin, INPUT_PULLDOWN);
 }
 
 
