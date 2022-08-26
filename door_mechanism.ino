@@ -84,6 +84,20 @@ void Door::close_down()
 }
 
 
+void Door::hold_until_robot_has_left_the_house()
+{
+    int time_until_robot_has_left_the_house = 10000;
+    delay(time_until_robot_has_left_the_house);
+}
+
+
+void Door::hold_until_robot_has_gone_to_sleep()
+{
+    int time_until_robot_has_gone_to_sleep = 10000;
+    delay(time_until_robot_has_gone_to_sleep);
+}
+
+
 bool Door::is_open()
 {
     bool is_already_open = _door_state == Door_state_e::open;

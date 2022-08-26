@@ -41,13 +41,11 @@ void loop ()
 {
     if (microphone.noise_detected() && door.is_closed()) {
         door.open_up();
-        int time_until_robot_has_left_the_house = 10000;
-        delay(time_until_robot_has_left_the_house);
+        door.hold_until_robot_has_left_the_house();
     }
 
     if (end_stop_switch.pushed() && microphone.no_noise_detected() && door.is_open()) {
         door.close_down();
-        int time_until_robot_has_gone_to_sleep = 10000;
-        delay(time_until_robot_has_gone_to_sleep);
+        door.hold_until_robot_has_gone_to_sleep();
     }
 }

@@ -22,6 +22,8 @@ class Door {
         void setup();
         void open_up();
         void close_down();
+        void hold_until_robot_has_left_the_house();
+        void hold_until_robot_has_gone_to_sleep();
         bool is_open();
         bool is_closed();
         void set_position_via_comport(uint8_t servo_idx);
