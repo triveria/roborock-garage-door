@@ -20,8 +20,8 @@
 #include "end_stop_switch.hpp"
 
 
-int microphone_pin = 16;
-int switch_pin = 17;
+int microphone_pin = 14;
+int switch_pin = 16;
 
 Door door;
 Microphone microphone(microphone_pin);
