@@ -3,22 +3,22 @@
 #include <Wire.h>
 
 
-#define SERVO_MIN  66  // This is the 'minimum' pulse length count (out of 4096). Tweak for each servo.
-#define SERVO_MAX  497 // This is the 'maximum' pulse length count (out of 4096). Tweak for each servo.
+#define SERVO_MIN  66  // This is the 'minimum' pulse length count (0..4095). Tweak for each servo.
+#define SERVO_MAX  497 // This is the 'maximum' pulse length count (0..4095). Tweak for each servo.
 
 #define DOOR_OPEN_RIGHT 111
-#define DOOR_CLOSE_RIGHT 273
+#define DOOR_CLOSE_RIGHT 260
 
 #define DOOR_OPEN_LEFT 262
-#define DOOR_CLOSE_LEFT 74
+#define DOOR_CLOSE_LEFT 73
 
 #define SERVO_FREQ 50 // Analog servos run at ~50 Hz updates
 
 
 void Door::_move_both_servos(int left_start_position, int right_start_position, int left_end_position, int right_end_position)
 {
-    float num_steps = 20.f;
-    int t_ms = 1000;
+    float num_steps = 5.f;
+    int t_ms = 500;
     int dt_ms = t_ms / num_steps;
     
     float step_size_left = (left_end_position - left_start_position) / num_steps;
@@ -118,14 +118,31 @@ bool Door::is_closed()
 }
 
 
+uint8_t Door::servo_left_idx()
+{
+    return _servo_left_idx;
+}
+
+
+uint8_t Door::servo_right_idx()
+{
+    return _servo_right_idx;
+}
+
+
 void Door::set_position_via_comport(uint8_t servo_idx)
 {
+    _pwm.wakeup();
     if(!(Serial.available() > 0)) {
         return;
     }
 
     int choice = Serial.parseInt();
-    set_position(servo_idx, choice + 100);
+    int missinterpreted_value = 0;
+    if (choice == missinterpreted_value) {
+        return;
+    }
+    set_position(servo_idx, choice - 100);
     delay(500);
     Serial.println((String)"moving to position: " + choice);
     set_position(servo_idx, choice);
