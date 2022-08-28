@@ -9,7 +9,7 @@
 #define DOOR_OPEN_RIGHT 111
 #define DOOR_CLOSE_RIGHT 260
 
-#define DOOR_OPEN_LEFT 262
+#define DOOR_OPEN_LEFT 241
 #define DOOR_CLOSE_LEFT 73
 
 #define SERVO_FREQ 50 // Analog servos run at ~50 Hz updates
