@@ -12,6 +12,11 @@
  * SDO -> SDA
  * CLK -> SCL 
  * 
+ * Update:
+ * The noise detection turns out to be unreliable:
+ * Every air movement is picked up by the microphone.
+ * Thus it also opens when ever some one opens a window or door.
+ * 
  */
 
 
@@ -39,12 +44,12 @@ void setup()
 
 void loop ()
 {
-    if (microphone.noise_detected() && door.is_closed()) {
+    if (!end_stop_switch.pushed() && door.is_closed()) {
         door.open_up();
         door.hold_until_robot_has_left_the_house();
     }
 
-    if (end_stop_switch.pushed() && microphone.no_noise_detected() && door.is_open()) {
+    if (end_stop_switch.pushed() && door.is_open()) {
         door.close_down();
         door.hold_until_robot_has_gone_to_sleep();
     }
