@@ -1,4 +1,4 @@
-# ref.: https://create.arduino.cc/projecthub/B45i/getting-started-with-arduino-cli-7652a5
+# ref.: https://arduino.github.io/arduino-cli/0.28/getting-started/
 
 
 LIBS:="Adafruit PWM Servo Driver Library"
@@ -12,6 +12,8 @@ all: compile
 
 install:
 	arduino-cli lib install $(LIBS)
+	arduino-cli core update-index --additional-urls https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
+	arduino-cli core install esp32:esp32
 
 compile:
 	arduino-cli compile --fqbn $(FQBN) $(SKETCH)
