@@ -3,7 +3,7 @@
 
 LIBS:="Adafruit PWM Servo Driver Library"
 FQBN:="esp32:esp32:esp32"
-SKETCH:="dobby_garage_door.ino"
+SKETCH:="roborock-garage-door.ino"
 
 USB_PORT:="/dev/ttyUSB0"
 
