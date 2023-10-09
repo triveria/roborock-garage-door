@@ -69,6 +69,9 @@ void Door::open_up()
     _pwm.wakeup();
     Serial.println("Opening door...");
     _move_both_servos(DOOR_CLOSE_LEFT, DOOR_CLOSE_RIGHT, DOOR_OPEN_LEFT, DOOR_OPEN_RIGHT);
+    int wait_until_movement_finished = 500;
+    delay(wait_until_movement_finished);
+    _switch_servos_off();
 
     _door_state = Door_state_e::open;
 }
@@ -76,9 +79,10 @@ void Door::open_up()
 
 void Door::close_down()
 {
+    _pwm.wakeup();
     Serial.println("Closing door...");
     _move_both_servos(DOOR_OPEN_LEFT, DOOR_OPEN_RIGHT, DOOR_CLOSE_LEFT, DOOR_CLOSE_RIGHT);
-    int wait_until_movement_finished = 500;
+    int wait_until_movement_finished = 2000;
     delay(wait_until_movement_finished);
     _switch_servos_off();
 
